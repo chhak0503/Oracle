@@ -66,31 +66,129 @@ insert into orders (ORD_CID, ORD_PNO, ORD_CNT, ORD_DATE) values ('c102', 1, 3, '
 insert into orders (ORD_CID, ORD_PNO, ORD_CNT, ORD_DATE) values ('c107', 6, 1, '2022-07-05 14:21:03');
 
 -- 실습 1-4
-select * from product;
+select * from customer;
 
 -- 실습 1-5
+select CID, NAME, HP from customer;
+
+
 -- 실습 1-6
+select * from product;
+
 -- 실습 1-7
+select company from product;
+
 -- 실습 1-8
+select distinct company from product;
+
 -- 실습 1-9
+select pname, price from product;
+
 -- 실습 1-10
+select pname, price + 500 as 조정단가 from product;
+
 -- 실습 1-11
+select pname, stock, price from product where company='오리온';
+
 -- 실습 1-12
+select ord_pno, ord_cnt, ord_date from orders where ord_cid='c102';
+
 -- 실습 1-13
+select ord_pno, ord_cnt, ord_date from orders where ord_cid='c102' and ord_cnt >= 2;
+
 -- 실습 1-14
+select * from product where price >= 1000 and price <= 2000;
+
 -- 실습 1-15
+select cid, name, hp, address from customer where name like '김%';
+
+
 -- 실습 1-16
+select cid, name, hp, address from customer where name like '__';
+
 -- 실습 1-17
+select * from customer where hp is null;
+
 -- 실습 1-18
+select * from customer where address is not null;
+
 -- 실습 1-19
+select * from customer order by rdate desc;
+
 -- 실습 1-20
+select * from orders 
+    where ord_cnt >= 3
+    order by ord_cnt desc, ord_pno asc;
+
 -- 실습 1-21
+select AVG(price) from product;
+
 -- 실습 1-22
+select SUM(stock) as "재고량 합계" from product where company = '농심';
+
+
 -- 실습 1-23
+select count(*) as 고객수 from customer;
+
 -- 실습 1-24
+select count(distinct company) as "제조업체 수" from product;
+
 -- 실습 1-25
+select 
+    ord_pno as "주문상품 번호",
+    sum(ord_cnt) as "총 주문 수량"
+from orders
+group by ord_pno
+order by ord_pno asc;
+
 -- 실습 1-26
+select 
+    company as 제조업체,
+    count(*) as 제품수,
+    max(price) as 최고가
+from product
+group by company
+order by company asc;
+
+
 -- 실습 1-27
+select 
+    company as 제조업체,
+    count(*) as 제품수,
+    max(price) as 최고가
+from product
+group by company
+having count(*) >= 2;
+
 -- 실습 1-28
+select 
+    ord_pno,
+    ord_cid,
+    sum(ord_cnt) as "총 주문수량"
+from orders
+group by ord_pno, ord_cid
+order by ord_pno;
+
 -- 실습 1-29
+select ord_cid, pname from orders a
+JOIN product b
+on a.ord_pno = b.pno
+where ord_cid = 'c102';
+
 -- 실습 1-30
+select
+    ord_cid,
+    name,
+    pname,
+    ord_date
+from orders a
+join customer b on a.ord_cid = b.cid
+join product c on a.ord_pno = c.pno
+where substr(ord_date, 1, 10) = '2022-07-03';
+//where ord_date like '2022-07-03%';
+
+
+
+
+
+
