@@ -314,7 +314,7 @@ ORDER BY orderTotalPrice DESC, b.name ASC;
 --문제5. 모든 주문의 주문번호, 주문자 아이디, 고객명, 상품명, 주문일자를 조회하시오. 주문번호는 중복없이 상품명은 구분자 ,로 나열할것
 SELECT
     a.orderNo,
-    MAX(c.userId) AS userId,
+    MAX(c.userId) AS userId, -- group by 절에 포함된 컬럼이 아니기 때문에 집계함수를 이용한 userId 출력(꼼수)
     MAX(c.name) AS userName,
     LISTAGG(d.prodName, ',') WITHIN GROUP (ORDER BY d.prodName) AS 상품명,
     MAX(a.orderDate) AS orderDate
